@@ -1,0 +1,13 @@
+analysis_name: phospho_noqc_20_10k
+data_type: stimulation # or phenotyping
+data_location: cytof_phospho_processed_local # Within data folder.
+args_file: args_phospho_noqc.txt # Within meta folder.
+panel_file: panel/phospho_panel_v3.txt # Within meta folder.
+condition_levels: 
+  - Control
+  - Case
+no_of_clusters: 20
+meta_string: meta20
+tsne_no_cells: 10000
+umap_no_cells: 10000
+merging1_file: phospho_noqc_20_merging1.txt

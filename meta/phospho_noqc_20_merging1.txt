@@ -1,0 +1,21 @@
+original_cluster	new_cluster
+9	CD127+ T helper cells
+10	Activated T helper cells
+2	Niave T helper cells
+6	T helper cells
+3	Cytotoxic T cells
+8	Cytotoxic NKT cells
+1	Niave cytotoxic T cells
+4	Cytotoxic T cells
+5	Naive total T cells
+7	Total T cells
+11	CD38high activated naive B cells
+12	Naive B cells
+13	IgD+ B cells
+19	CD56+CD16+NK cells
+20	CD56+CD16-NK cells
+14	pDC
+16	Activated pDC
+15	Myeloid DC
+17	DC
+18	Activated monocytes

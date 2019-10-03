@@ -1,0 +1,21 @@
+original_cluster	new_cluster
+17	CD38high activated (CD27+) memory IgA+ B cells
+14	Macrophage Or IgD+ B cells
+19	IgA+ naive B cells
+20	IgD+ (CD27+) memory B cells
+16	CD24+ B cells(primarily memory B cells)
+15	IgD+ naive B cells
+18	IgM+  naive B cells
+2	Mature monocytes
+6	Non-classical monocytes
+1	CD39+ monocytes
+7	Conventional dendritic cells (cDCs)
+8	NK cells
+13	Garnulocytic/ PMN-MDSC
+5	Central memory T helper cells
+12	Central memory Cytotoxic T cells
+3	Total T cells
+11	CCR4+ memory  cytotoxic T cells
+9	pDC
+4	CD127+ T helper cells
+10	NK cells
