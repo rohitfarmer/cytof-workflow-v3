@@ -3,6 +3,8 @@ This repository is ready to use code for implementing CyTOF workflow V3 from Mar
 
 In addition to the figures, the code also saves daFrame object (that carries all the input data and results) in an R data structure file after each major calculation step. To ensure if the calculation breaks, then you don't have to run the entire pipeline from the beginning. You can resume from where the last daFrame is saved. I have also implemented code to extract information from daFrame object and store them in TSV files.
 
+For feedback and collaborations please write to me at [rohit.farmer@gmail.com](mailto:rohit.farmer@gmail.com).
+
 # Requirements for the CyTOF Workflow V3
 This implementation of the pipeline requires two meta files (args and panel) describing the experimental design; a YAML file that defines the run specific arguments to the scripts and a manually curated cluster merging file.
 
