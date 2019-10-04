@@ -146,5 +146,6 @@ singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script5_da.R me
 ```
 singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script6_ds.R meta/PBMC8.yaml
 ```
+**Output Data**
 * TSV files with p and adjusted p-values from LMM (Figure 24 and 26): `results/PBMC8/p_ds_lmm1.tsv, p_ds_lmm2.tsv, p_ds_lmm3.tsv, p_ds_lmm4.tsv`
 * TSV files with summary statistics from LMM (Figure 24 and 26): `results/PBMC8/summary_ds_lmm1.tsv, summary_ds_lmm2.tsv, summary_ds_lmm3.tsv, summary_ds_lmm4.tsv`
