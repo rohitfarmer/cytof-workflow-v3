@@ -1,0 +1,21 @@
+original_cluster	new_cluster
+1	B-cells IgM+
+2	surface-
+3	NK cells
+4	CD8 T-cells
+5	B-cells IgM-
+6	monocytes
+7	monocytes
+8	CD8 T-cells
+9	CD8 T-cells
+10	monocytes
+11	monocytes
+12	CD4 T-cells
+13	DC
+14	CD8 T-cells
+15	CD4 T-cells
+16	DC
+17	CD4 T-cells
+18	CD4 T-cells
+19	CD4 T-cells
+20	CD4 T-cells

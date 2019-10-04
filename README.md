@@ -3,25 +3,6 @@ This repository is ready to use code for implementing CyTOF workflow V3 from Mar
 
 In addition to the figures, the code also saves daFrame object (that carries all the input data and results) in an R data structure file after each major calculation step. To ensure if the calculation breaks, then you don't have to run the entire pipeline from the beginning. You can resume from where the last daFrame is saved. I have also implemented code to extract information from daFrame object and store them in TSV files.
 
-# Clone this Repository
-`git clone https://github.com/rohitfarmer/cytof-workflow-v3.git <project_name>`
-
-# Setup Working Directory
-After cloning the repository:
-```
-cd <project_name>
-sh setup.sh
-```
-# Singularity Container
-Singularity container with the CyTOF workflow version 3 can be downloaded from:
-
-[https://cloud.sylabs.io/library/_container/5d76b50b2c3454e3496d88c9](https://cloud.sylabs.io/library/_container/5d76b50b2c3454e3496d88c9)  
-(Please see the description associated with each container for more details.) 
-
-or
-
-`singularity pull library://rohitfarmer/default/cytof_workflow_v3`  
-
 # Requirements for the CyTOF Workflow V3
 This implementation of the pipeline requires two meta files (args and panel) describing the experimental design; a YAML file that defines the run specific arguments to the scripts and a manually curated cluster merging file.
 
@@ -41,6 +22,81 @@ This implementation of the pipeline requires two meta files (args and panel) des
    file, and parameters to be passed to the workflow scripts.
    * A separate YAML file need to be created for every distinct analysis.
 4. **Cluster Merging 1 file.** After the meta clustering step a manually curated merging file is required that gives a cell population name to each of the meta clusters.
+
+# Setup an Example Project Environment 
+## Clone this Repository
+`git clone https://github.com/rohitfarmer/cytof-workflow-v3.git <project_name>`
+
+## Setup Working Directory
+After cloning the repository:
+```
+cd <project_name>
+sh setup.sh
+```
+## Download Singularity Container
+Download the Singularity container with the CyTOF workflow version 3 in the project directory.
+
+[https://cloud.sylabs.io/library/_container/5d76b50b2c3454e3496d88c9](https://cloud.sylabs.io/library/_container/5d76b50b2c3454e3496d88c9)  
+(Please see the description associated with each container for more details.) 
+
+or
+
+`singularity pull library://rohitfarmer/default/cytof_workflow_v3`  
+
+## Download Example Data
+* FCS files: [PBMC8_fcs_files.zip](http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_fcs_files.zip)
+```
+cd <project_name>
+cd data
+wget http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_fcs_files.zip
+unzip PBMC8_fcs_files.zip -d PBMC8_fcs_files
+```
+**Meta data, panel, and merging file are already in the meta folder in this repository; however, below are the instructions to download them. After download convert all the MS Excel files to TSV text files. I have modified the code to read TSVs than MS Excel files. I find it easier to work with TSV text files in a cross platform environment.** 
+* Metadata: [PBMC8_metadata.xlsx](http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_metadata.xlsx)
+```
+cd <project_name>
+cd meta
+wget http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_metadata.xlsx
+```
+
+* Panel (v3): [PBMC8_panel_v3.xlsx](http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_panel_v3.xlsx)
+```
+cd <project_name>
+cd meta/panel
+wget http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_panel_v3.xlsx
+```
+
+* Merging of 20 metaclusters: [PBMC8_cluster_merging1.xlsx](http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_cluster_merging1.xlsx)
+```
+cd <project_name>
+cd meta
+wget http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_cluster_merging1.xlsx
+```
+
+* Merging of 12 metaclusters (v3): [PBMC8_cluster_merging2_v3.xlsx](http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_cluster_merging2_v3.xlsx)
+```
+cd <project_name>
+cd meta
+wget http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_cluster_merging2_v3.xlsx
+```
+
+## Prepare YAML file
+Prepare a YAML file per analysis in the meta folder.
+```
+analysis_name: PBMC8
+data_type: phenotyping # or stimulation
+data_location: PBMC8_fcs_files # Within data folder.
+args_file: PBMC8_metadata.txt # Within meta folder.
+panel_file: panel/PBMC8_panel_v3.txt # Within meta folder.
+condition_levels:
+  - Ref
+  - BCRXL
+no_of_clusters: 20
+meta_string: meta20
+tsne_no_cells: 500
+umap_no_cells: 1000
+merging1_file: PBMC8_cluster_merging2_v3.txt
+```
 
 # Scripts to Run in Order
 All the scripts can be run interactively by specifying the path to the YAML file at the very beginning of the script. Scripts can also be run with Rscript and passing the YAML file as a command line argument. In the workflow below the script are shown to run through Rscript within the singularity container mentioned above.  
