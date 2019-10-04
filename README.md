@@ -41,7 +41,7 @@ Download the Singularity container with the CyTOF workflow version 3 in the proj
 
 or
 
-`singularity pull library://rohitfarmer/default/cytof_workflow_v3`  
+`singularity pull library://rohitfarmer/default/cytof_workflow_v3:<container_unique_id>`  
 
 ## Download Example Data
 * FCS files: [PBMC8_fcs_files.zip](http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_fcs_files.zip)
@@ -84,7 +84,7 @@ wget http://imlspenticton.uzh.ch/robinson_lab/cytofWorkflow/PBMC8_cluster_mergin
 Prepare a YAML file per analysis in the meta folder.
 ```
 analysis_name: PBMC8
-data_type: phenotyping # or stimulation
+data_type: stimulation # or phenotyping
 data_location: PBMC8_fcs_files # Within data folder.
 args_file: PBMC8_metadata.txt # Within meta folder.
 panel_file: panel/PBMC8_panel_v3.txt # Within meta folder.
@@ -103,33 +103,48 @@ All the scripts can be run interactively by specifying the path to the YAML file
 
 ## Data Import, Transformation and Diagnostic Plots (Figures 1 to 5)
 ```
-singularity exec cytof_workflow_v3.sif Rscript --vanill scripts/script1_arcsinh.R meta/pheno_noqc_20_10k.yaml
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script1_1_diag_plots.R meta/pheno_noqc_20_10k.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script1_arcsinh.R meta/PBMC8.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script1_1_diag_plots.R meta/PBMC8.yaml
 ```
+**Output Data**
+* R data structure with arcsinh transformed data: `results/PBMC8/daf_arcsinh.rds`
 
 ## Clustering and Meta Clustering (Figures 6 to 8)
 ```
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script2_clust.R meta/pheno_noqc_20_10k.yaml
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script2_1_clust_plots.R meta/pheno_noqc_20_10k.yaml 
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script2_clust.R meta/PBMC8.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script2_1_clust_plots.R meta/PBMC8.yaml 
 ```
+**Output Data**
+* R data structure with added clustering data: `results/PBMC8/daf_clust.rds`
 
 ## Dimensionality Reduction (Figures 9 to 14)
 ```
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script3_dr.R meta/pheno_noqc_20_10k.yaml
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script3_1_dr_plots.R meta/pheno_noqc_20_10k.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script3_dr.R meta/PBMC8.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script3_1_dr_plots.R meta/PBMC8.yaml
 ```
+**Output Data**
+* R data structure with added dimensionality reduction data: `results/PBMC8/daf_dr.rds`
 
 ## Cluster Merging 1 (Figures 15 to 18)
 ```
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script4_merging1.R meta/pheno_noqc_20_10k.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script4_merging1.R meta/PBMC8.yaml
 ```
+**Output Data**
+* R data structure with added merging 1 data: `results/PBMC8/daf_merging1.rds`
 
 ## Differential Abundance (DA) Analysis using GLMM and edgeR (Figures 20 to 22)
 ```
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script5_da.R meta/pheno_noqc_20_10k.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script5_da.R meta/PBMC8.yaml
 ```
+**Output Data**
+* Figure 20 data: `results/PBMC8/fig20_data.tsv`
+* TSV files with p and adjusted p-values from GLMM (Figure 22): `results/PBMC8/p_glmm0.tsv, p_glmm1.tsv, p_glmm2.tsv`
+* TSV file with p and adjusted p-values from edger (Figure 22): `results/PBMC8/p_edger.tsv`              
+* Summary statistics from GLMM and edge runs (Figure 22): `results/PBMC8/summary_glmm0.tsv, summary_glmm1.tsv, summary_glmm2.tsv, summary_edger.tsv`
 
 ## Differential State (DS) Analysis using LMM (Figures 23 to 26)
 ```
-singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script6_ds.R meta/pheno_noqc_20_10k.yaml
+singularity exec cytof_workflow_v3.sif Rscript --vanilla scripts/script6_ds.R meta/PBMC8.yaml
 ```
+* TSV files with p and adjusted p-values from LMM (Figure 24 and 26): `results/PBMC8/p_ds_lmm1.tsv, p_ds_lmm2.tsv, p_ds_lmm3.tsv, p_ds_lmm4.tsv`
+* TSV files with summary statistics from LMM (Figure 24 and 26): `results/PBMC8/summary_ds_lmm1.tsv, summary_ds_lmm2.tsv, summary_ds_lmm3.tsv, summary_ds_lmm4.tsv`

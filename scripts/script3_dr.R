@@ -10,12 +10,14 @@ cmd_args = commandArgs(trailingOnly=TRUE)
 # Temp. If using RStudio.
 # setwd("/Users/farmerr2/locus/sandbox/projects/mini")
 
+# If using example PBMC8 data.
+RNGversion("3.5.3")
 
 # Read yaml file. 
 suppressMessages(library(yaml))
 if(interactive()){
         cat("Running in interactive mode.\n")
-        yam <- read_yaml("meta/detector.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
+        yam <- read_yaml("meta/PBMC8.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
 }else{
         cat("Running in Rscript mode.\n")
         if (length(cmd_args) < 1){

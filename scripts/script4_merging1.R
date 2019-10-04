@@ -15,7 +15,7 @@ cmd_args = commandArgs(trailingOnly=TRUE)
 suppressMessages(library(yaml))
 if(interactive()){
         cat("Running in interactive mode.\n")
-        yam <- read_yaml("meta/pheno_noqc_20_10k.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
+        yam <- read_yaml("meta/PBMC8.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
 }else{
         cat("Running in Rscript mode.\n")
         if (length(cmd_args) < 1){

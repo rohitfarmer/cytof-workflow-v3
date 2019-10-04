@@ -14,7 +14,7 @@ cmd_args = commandArgs(trailingOnly=TRUE)
 suppressMessages(library(yaml))
 if(interactive()){
         cat("Running in interactive mode.\n")
-        yam <- read_yaml("meta/phospho_noqc_20_10k.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
+        yam <- read_yaml("meta/PBMC8.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
 }else{
         cat("Running in Rscript mode.\n")
         if (length(cmd_args) < 1){
@@ -103,6 +103,7 @@ write.table(sum_lmm2, file = file.path("results", analysis_name, "summary_ds_lmm
 
 # Figure 24 DS test results and normalized expression of signaling markers in
 # PBMC populations in stimulated and unstimulated conditions.
+loginfo("Generating figure 24.")
 pdf(file = file.path(figures_folder, "figure24_lmm_1.pdf"), width = 28, height = 14)
 fig24_1 <- plotDiffHeatmap(daf, ds_res1, top_n = 10, order = TRUE, 
                          th = FDR_cutoff, normalize = TRUE, hm1 = FALSE)

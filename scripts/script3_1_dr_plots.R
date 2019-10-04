@@ -14,7 +14,7 @@ cmd_args = commandArgs(trailingOnly=TRUE)
 suppressMessages(library(yaml))
 if(interactive()){
         cat("Running in interactive mode.\n")
-        yam <- read_yaml("meta/detector.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
+        yam <- read_yaml("meta/PBMC8.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
 }else{
         cat("Running in Rscript mode.\n")
         if (length(cmd_args) < 1){
@@ -92,7 +92,7 @@ gc()
 loginfo("Generating figure11.")
 fig11 <- plotDR(daf, "UMAP", color_by = meta_string, facet = "sample_id")
 ggsave("figure11.pdf", plot = fig11, device = "pdf", path = figures_folder, width = 40, height = 48, units = "in", scale = 1)
-rm(fig10)
+rm(fig11)
 gc()
 
 # Figure 12. UMAP as in Figure 10, but stratified by condition.
@@ -128,6 +128,5 @@ for (i in marker_names){
         rm(fig14)
         gc()
 }
-
 
 loginfo("Done")

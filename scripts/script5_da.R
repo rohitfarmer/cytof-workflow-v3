@@ -14,7 +14,7 @@ cmd_args = commandArgs(trailingOnly=TRUE)
 suppressMessages(library(yaml))
 if(interactive()){
         cat("Running in interactive mode.\n")
-        yam <- read_yaml("meta/phospho_noqc_20_10k.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
+        yam <- read_yaml("meta/PBMC8.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
 }else{
         cat("Running in Rscript mode.\n")
         if (length(cmd_args) < 1){
@@ -81,21 +81,15 @@ loginfo("Generating figure 22.")
 ei <- metadata(daf)$experiment_info 
 
 # Create formula for DA using GLMM.
-da_formula_no_ran <- createFormula(ei, cols_fixed = "condition") 
 da_formula0  <- createFormula(ei, cols_fixed = "condition", cols_random = "patient_id")
 da_formula1 <- createFormula(ei, cols_fixed = "condition", cols_random = "sample_id")
 da_formula2 <- createFormula(ei, cols_fixed = "condition", cols_random = c("sample_id", "patient_id"))
 
 # Create contrast matrix for GLMM.
-levels(da_formula_no_ran$data$condition)
+levels(da_formula0$data$condition)
 contrast <- createContrast(c(0,1))
 
 # Run DA for GLMM.
-da_res_no_ran <- diffcyt(daf,                                            
-    formula = da_formula_no_ran, contrast = contrast,                    
-    analysis_type = "DA", method_DA = "diffcyt-DA-GLMM",           
-    clustering_to_use = "merging1", verbose = T)               
-
 da_res0 <- diffcyt(daf,                                            
     formula = da_formula0, contrast = contrast,                    
     analysis_type = "DA", method_DA = "diffcyt-DA-GLMM",           
@@ -112,14 +106,11 @@ da_res2 <- diffcyt(daf,
     clustering_to_use = "merging1", verbose = T)   
 
 # Check for clusters below the FDR cuttoff. 
-table(rowData(da_res_no_ran$res)$p_adj < FDR_cutoff)
 table(rowData(da_res0$res)$p_adj < FDR_cutoff)
 table(rowData(da_res1$res)$p_adj < FDR_cutoff)
 table(rowData(da_res2$res)$p_adj < FDR_cutoff)
 
 # Save p and adj-p values to a TSV file. 
-p_glmm_no_ran <- rowData(da_res_no_ran$res)
-write.table(p_glmm_no_ran, file = file.path("results", analysis_name, "p_glmm_no_ran.tsv"), sep = "\t", row.names = F)
 p_glmm0 <- rowData(da_res0$res)
 write.table(p_glmm0, file = file.path("results", analysis_name, "p_glmm0.tsv"), sep = "\t", row.names = F)
 p_glmm1 <- rowData(da_res1$res)
@@ -129,8 +120,6 @@ write.table(p_glmm2, file = file.path("results", analysis_name, "p_glmm2.tsv"), 
 
 # Summary table displaying the results (raw and adjusted p-values) 
 # together with the observed cell population proportions by sample.
-sum_glmm_no_ran <- topTable(da_res_no_ran, show_props = TRUE, format_vals = TRUE, digits = 2)
-write.table(sum_glmm_no_ran, file = file.path("results", analysis_name, "summary_glmm_no_ran.tsv"), sep = "\t", row.names = F)
 sum_glmm0 <- topTable(da_res0, show_props = TRUE, format_vals = TRUE, digits = 2)
 write.table(sum_glmm0, file = file.path("results", analysis_name, "summary_glmm0.tsv"), sep = "\t", row.names = F)
 sum_glmm1 <- topTable(da_res1, show_props = TRUE, format_vals = TRUE, digits = 2)
@@ -172,12 +161,6 @@ write.table(sum_edger, file = file.path("results", analysis_name, "summary_edger
 # samples used. 
 
 # Figure 22 for GLMM.
-pdf(file = file.path(figures_folder, "figure22_glmm_no_ran.pdf"), width = 28, height = 14)
-fig22_no_ran <- plotDiffHeatmap(daf, da_res_no_ran, th = FDR_cutoff, normalize = TRUE, hm1 = FALSE)
-dev.off()
-rm(fig22_no_ran)
-gc()
-
 pdf(file = file.path(figures_folder, "figure22_glmm_0.pdf"), width = 28, height = 14)
 fig22_0 <- plotDiffHeatmap(daf, da_res0, th = FDR_cutoff, normalize = TRUE, hm1 = FALSE)
 dev.off()

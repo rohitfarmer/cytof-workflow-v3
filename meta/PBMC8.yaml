@@ -1,5 +1,5 @@
 analysis_name: PBMC8
-data_type: phenotyping # or stimulation
+data_type: stimulation # or phenotyping
 data_location: PBMC8_fcs_files # Within data folder.
 args_file: PBMC8_metadata.txt # Within meta folder.
 panel_file: panel/PBMC8_panel_v3.txt # Within meta folder.
@@ -10,4 +10,4 @@ no_of_clusters: 20
 meta_string: meta20
 tsne_no_cells: 500
 umap_no_cells: 1000
-merging1_file: PBMC8_cluster_merging2_v3.txt
+merging1_file: PBMC8_cluster_merging1.txt

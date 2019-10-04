@@ -14,7 +14,7 @@ cmd_args = commandArgs(trailingOnly=TRUE)
 suppressMessages(library(yaml))
 if(interactive()){
         cat("Running in interactive mode.\n")
-        yam <- read_yaml("meta/pheno_noqc_20_10k.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
+        yam <- read_yaml("meta/PBMC8.yaml", fileEncoding = "UTF-8") # Change yaml file for interactive execution.
 }else{
         cat("Running in Rscript mode.\n")
         if (length(cmd_args) < 1){
@@ -96,17 +96,17 @@ gc()
 # each sample in the PBMC dataset.
 # For phenotyping data it will not produce any figure because there are no
 # functional markers. 
-# if(data_type == "stimulation"){
-#         loginfo("Stimulation data. Generating figure4.")
-#         pdf(file = file.path(figures_folder, "figure4.pdf"), paper = "USr")
-#         fig4 <- plotExprHeatmap(daf, bin_anno = TRUE, row_anno = TRUE)
-#         draw(fig4)
-#         dev.off()
-#         rm(fig4)
-#         gc()
-# }else if(data_type == "phenotyping"){
-#         loginfo("Phenotyping data skipping figure 4 generation.")
-# }
+if(data_type == "stimulation"){
+        loginfo("Stimulation data. Generating figure4.")
+        pdf(file =  file.path(figures_folder, "figure4.pdf"), width = 11, height = 8.5)
+        fig4 <- plotExprHeatmap(daf, bin_anno = TRUE, row_anno = TRUE)
+        draw(fig4)
+        dev.off()
+        rm(fig4)
+        gc()
+}else if(data_type == "phenotyping"){
+        loginfo("Phenotyping data skipping figure 4 generation.")
+}
 
 # Figure 5. Non-redundancy scores for each of the markers and all samples in the PBMC dataset.
 loginfo("Generating figure5.")
